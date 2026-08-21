@@ -1,8 +1,9 @@
 def fibonacci_memo(n, memo):
-    if n == 0:
+    # Base cases
+    if n == 1:
         return 0
 
-    if n == 1:
+    if n == 2:
         return 1
 
     # Return already calculated value
@@ -20,7 +21,11 @@ def main():
     print("   FIBONACCI USING MEMOIZATION")
     print("=" * 45)
 
-    n = 22
+    n = int(input("Enter the value of n: "))
+
+    if n < 1:
+        print("Please enter a positive integer.")
+        return
 
     # Create memoization array
     memo = [-1] * (n + 1)
