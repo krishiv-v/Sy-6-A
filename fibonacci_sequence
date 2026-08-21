@@ -1,28 +1,31 @@
-def fib_iter(n):
-    if n < 0:
-        raise ValueError("Input must be a non-negative integer.")
+def fibonacci_memo(n, memo):
     if n == 0:
         return 0
-    elif n == 1:
+
+    if n == 1:
         return 1
 
-    a, b = 0, 1
-    for _ in range(2, n + 1):
-        c = a + b
-        a = b
-        b = c
+    # Return already calculated value
+    if memo[n] != -1:
+        return memo[n]
 
-    return b
+    # Calculate and store the result
+    memo[n] = fibonacci_memo(n - 1, memo) + fibonacci_memo(n - 2, memo)
+
+    return memo[n]
 
 
 def main():
     print("=" * 45)
-    print("      EFFICIENT FIBONACCI CALCULATOR")
+    print("   FIBONACCI USING MEMOIZATION")
     print("=" * 45)
 
     n = 22
 
-    result = fib_iter(n)
+    # Create memoization array
+    memo = [-1] * (n + 1)
+
+    result = fibonacci_memo(n, memo)
 
     print("-" * 45)
     print(f"The {n}th Fibonacci number is: {result}")
