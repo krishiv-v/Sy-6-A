@@ -1,33 +1,17 @@
 import re
 
-webpage = """
-<html>
-<head>
-    <title>Student Portfolio</title>
-</head>
-<body>
-    <h1>My Portfolio</h1>
-    <p>Welcome to my webpage.</p>
-    <div>About Me</div>
-    <table>
-        <tr>
-            <td>Subject</td>
-            <td>Marks</td>
-        </tr>
-    </table>
-</body>
-</html>
+text = """
+Hello, my email is mridulchavhan@gmail.com.
+You can contact mitadt@gmaail.com.
+My college email is mridulchavhan567@gmail.com.
+For support, contact support@mitadtu.org.
 """
 
-# Regex pattern to find selected opening HTML tags
-tag_pattern = r"<(h1|p|div|table)\b[^>]*>"
+pattern = r'[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}'
 
-found_tags = re.findall(tag_pattern, webpage, re.IGNORECASE)
+emails = re.findall(pattern, text)
 
-print("Selected HTML Tags:")
-print("-------------------")
+print("Email addresses found:")
 
-for item in found_tags:
-    print(f"<{item}>")
-
-print("\nNumber of tags found:", len(found_tags))
+for email in emails:
+    print(email)
