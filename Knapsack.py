@@ -1,34 +1,44 @@
-def bottom_up(w, v, c):
-    dp = [0] * (c + 1)
-    for i in range(len(w)):
-        for j in range(c, w[i] - 1, -1):
-            dp[j] = max(dp[j], v[i] + dp[j - w[i]])
-    return dp[c]
+def knapsack_bottom_up(weights, values, capacity):
+    dp = [0] * (capacity + 1)
+
+    for i in range(len(weights)):
+        for j in range(capacity, weights[i] - 1, -1):
+            dp[j] = max(dp[j], values[i] + dp[j - weights[i]])
+
+    return dp[capacity]
 
 
-def top_down(w, v, c, memo={}):
-    if c == 0 or not w:
+def knapsack_top_down(weights, values, capacity, memo=None):
+    if memo is None:
+        memo = {}
+
+    if capacity == 0 or not weights:
         return 0
-    if (len(w), c) in memo:
-        return memo[(len(w), c)]
 
-    if w[-1] > c:
-        ans = top_down(w[:-1], v[:-1], c, memo)
+    key = (len(weights), capacity)
+
+    if key in memo:
+        return memo[key]
+
+    if weights[-1] > capacity:
+        ans = knapsack_top_down(weights[:-1], values[:-1], capacity, memo)
     else:
         ans = max(
-            v[-1] + top_down(w[:-1], v[:-1], c-w[-1], memo),
-            top_down(w[:-1], v[:-1], c, memo)
+            values[-1] + knapsack_top_down(
+                weights[:-1], values[:-1], capacity - weights[-1], memo
+            ),
+            knapsack_top_down(weights[:-1], values[:-1], capacity, memo)
         )
 
-    memo[(len(w), c)] = ans
+    memo[key] = ans
     return ans
 
 
 # Input
 n = int(input("Number of items: "))
-w = list(map(int, input("Weights: ").split()))
-v = list(map(int, input("Values: ").split()))
-c = int(input("Capacity: "))
+weights = list(map(int, input("Weights: ").split()))
+values = list(map(int, input("Values: ").split()))
+capacity = int(input("Capacity: "))
 
-print("Bottom-Up:", bottom_up(w, v, c))
-print("Top-Down:", top_down(w, v, c))
+print("Bottom-Up:", knapsack_bottom_up(weights, values, capacity))
+print("Top-Down:", knapsack_top_down(weights, values, capacity))
