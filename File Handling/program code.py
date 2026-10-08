@@ -1,15 +1,17 @@
-with open("input.txt", "r") as file:
-    lines = file.readlines()
+try:
+    with open("input.txt","r") as file:
+        lines = file.readlines()
 
-# Count lines
-line_count = len(lines)
-print("Total number of lines:", line_count)
+    total_lines = len(lines)
 
-# Extract first two lines
-first_two_lines = lines[:2]
+    first_two_lines = lines[:2]
 
-# Write first two lines to a new file
-with open("output.txt", "w") as file:
-    file.writelines(first_two_lines)
+    with open("output.txt","w") as file: 
+        file.write(f"Total lines :{total_lines}\n")
+        file.writelines(first_two_lines)
+        
+        print("Done output written to output.txt")
 
-print("First two lines written to output.txt")
+except FileNotFoundError:
+    print("Error : input .txt not found")
+    
